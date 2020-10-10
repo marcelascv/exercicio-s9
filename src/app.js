@@ -10,10 +10,14 @@ const express = require('express');
 const app = express();
 
 const livros = require('./routes/livrosRoutes');
+// importar a rota de funcionarios
+const funcionarios = require('./routes/funcionariosRoutes');
 
 // / é um endpoint
 //  livros é a rota
 app.use('/', livros);
+// usar a rota de funcionarios
+app.use('/', funcionarios);
 
 // * significa qualquer coisa que não seja o que a gente já mapeou no caso
 // se retornar o status for 404, você vai enviar esse arquivo aqui no diretório
