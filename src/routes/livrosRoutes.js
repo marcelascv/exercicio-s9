@@ -12,5 +12,8 @@ const controller = require('../controller/livrosController');
 
 route.get('/livros', controller.getAll);
 route.get('/livros/:id', controller.getByID);
+route.get('/titulos', controller.getAllTitles);
+route.post('/livros', controller.postLivro);
+route.delete('/livros/:id', controller.deleteLivro);
 
 module.exports = route

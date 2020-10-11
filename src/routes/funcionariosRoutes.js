@@ -12,5 +12,8 @@ const controller = require('../controller/funcionariosController');
 
 route.get('/funcionarios', controller.getAll);
 route.get('/funcionarios/:id', controller.getByID);
+route.get('/nomes', controller.getAllNames);
+route.post('/funcionarios', controller.postFuncionario);
+route.delete('/funcionarios/:id', controller.deleteFuncionario);
 
 module.exports = route

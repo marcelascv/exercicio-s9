@@ -9,6 +9,7 @@
 // ../../ subir mais um nível e quando mais você colocar mais níveis vai subindo
 
 const livros = require('../model/livros.json');
+const fs = require('fs');
 
 const getAll = (req, res) => {
     console.log(req.url);
@@ -33,4 +34,52 @@ const getByID = (req, res) => {
     res.status(200).send(livroFiltrado)
 }
 
-module.exports = { getAll, getByID }
+// passo-a-passo
+
+// 1: criar método getAllTitles
+// 2: retornar somente o nome dos titulos da lista de livros
+
+const getAllTitles = (req, res) => {
+    const titulos = livros.map((livro) => livro.titulo)
+
+    res.status(200).send(titulos)
+}
+
+// passo-a-passo
+
+// 1: criar uma função
+// 2: atribuir dois parâmetros (requisição e resposta)
+// 3: criar o corpo da função
+
+const postLivro = (req, res) => {
+    console.log(req.body);
+    const { id, titulo, dataPublicacao, pessoaAutora, assunto} = req.body;
+    livros.push({ id, titulo, dataPublicacao, pessoaAutora, assunto});
+
+    fs.writeFile('./src/model/livros.json', JSON.stringify(livros), 'utf8', function(err) {
+        if (err) {
+            return res.status(424).send({ message: err });
+        }
+        console.log('Arquivo atualizado com sucesso!');
+    });
+
+    res.status(201).send(livros)
+};
+
+const deleteLivro = (req, res) => {
+    const id = req.params.id;
+    const livroFiltrado = livros.find((livro) => livro.id == id);
+    const index = livros.indexOf(livroFiltrado);
+    livros.splice(index, 1);
+
+    fs.writeFile('./src/model/livros.json', JSON.stringify(livros), 'utf8', function(err) {
+        if (err) {
+            return res.status(424).send({ message: err });
+        }
+        console.log('Arquivo atualizado com sucesso!');
+    });    
+
+    res.status(200).send(livros);
+};
+
+module.exports = { getAll, getByID, getAllTitles, postLivro, deleteLivro }

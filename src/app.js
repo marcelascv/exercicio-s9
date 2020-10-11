@@ -7,11 +7,16 @@
 // 5: exportar o app
 
 const express = require('express');
+const bodyParser = require(('body-parser'));
 const app = express();
 
 const livros = require('./routes/livrosRoutes');
 // importar a rota de funcionarios
 const funcionarios = require('./routes/funcionariosRoutes');
+
+// configurar body parser
+app.use(bodyParser.json());
+//app.use(express.json());
 
 // / é um endpoint
 //  livros é a rota
